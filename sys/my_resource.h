@@ -10,6 +10,15 @@
 #define RUSAGE_SELF 1337
 
 
+#ifdef _MSC_VER
+
+typedef struct timeval {
+	long tv_sec;
+	long tv_usec;
+} TIMEVAL, * PTIMEVAL, * LPTIMEVAL;
+
+#endif
+
 struct rusage
 {
 	struct timeval ru_utime; /* user CPU time used */
