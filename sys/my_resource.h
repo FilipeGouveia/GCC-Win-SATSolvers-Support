@@ -9,6 +9,7 @@
 
 #define RUSAGE_SELF 1337
 
+#define _SC_PAGESIZE 1437
 
 #ifdef _MSC_VER
 
@@ -76,6 +77,19 @@ static inline int getrusage(int who, struct rusage *rusage) {
 	li.QuadPart /= 10L;			/* Convert to microseconds */
 	rusage->ru_utime.tv_sec = li.QuadPart / 1000000L;
 	rusage->ru_utime.tv_usec = li.QuadPart % 1000000L;
+	return 0;
+}
+
+// check https://stackoverflow.com/questions/3351940/detecting-the-memory-page-size
+
+long sysconf ( int name)
+{
+	if ( name == _SC_PAGESIZE)
+	{
+		SYSTEM_INFO sysInfo;
+		GetSystemInfo(&sysInfo);
+		return sysInfo.dwPageSize;
+	}
 	return 0;
 }
 
